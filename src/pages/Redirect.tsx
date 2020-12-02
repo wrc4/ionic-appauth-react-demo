@@ -13,7 +13,7 @@ const LoginRedirect : React.FC<LoginRedirectPageProps> = (props: LoginRedirectPa
     let observer: AuthObserver;
     
     useIonViewDidEnter(() => {
-      Auth.Instance.handleCallback(window.location.origin + props.location.pathname +  props.location.search);
+      Auth.Instance.authorizationCallback(window.location.origin + props.location.pathname +  props.location.search);
       observer = Auth.Instance.addActionListener((action) => {
         if(action.action === AuthActions.SignInSuccess){
           props.history.replace('home');

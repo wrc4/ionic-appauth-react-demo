@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonPage, useIonViewWillEnter, useIonViewDidLeave } from '@ionic/react';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonPage, useIonViewWillEnter, useIonViewDidLeave, IonChip } from '@ionic/react';
 
 import { ActionCard } from '../components';
 import { Auth } from '../services/AuthService';
 import { AuthActions, AuthActionBuilder, AuthObserver } from 'ionic-appauth';
 import { RouteComponentProps } from 'react-router';
+import { getPlatforms } from '@ionic/react';
+
 
 interface LandingPageProps extends RouteComponentProps {}
 
@@ -42,6 +44,7 @@ const Landing : React.FC<LandingPageProps> = (props: LandingPageProps) => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
+                <IonChip>{getPlatforms().join(',')}</IonChip>
                 <IonButton onClick={handleSignIn}>Sign In</IonButton>
                 <ActionCard action={action}></ActionCard>
             </IonContent>

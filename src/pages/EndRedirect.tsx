@@ -12,7 +12,7 @@ const EndRedirect : React.FC<EndRedirectPageProps> = (props: EndRedirectPageProp
     let observer: AuthObserver;
 
     useIonViewWillEnter(() => {
-        Auth.Instance.handleCallback(window.location.origin + props.location.pathname +  props.location.search);
+        Auth.Instance.endSessionCallback();
         observer = Auth.Instance.addActionListener((action) => {
             if(action.action === AuthActions.SignOutSuccess ||
                 action.action === AuthActions.SignInFailed){
