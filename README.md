@@ -1,6 +1,6 @@
 This mod is based on a [tutorial](https://developer.okta.com/blog/2019/06/20/ionic-4-tutorial-user-authentication-and-registration) by Matt Raible from Okta to add user login to an ionic 4 App. _"The integration uses Ionic's native HTTP plugin for Cordova because the default HTTP from Capacitor uses a capacitor://localhost origin header and Okta only supports http origins."_
 
-Using the same concept I created a Ionic project (Angular) and added auth using schematics:
+Using the same concept I created an Ionic project (Angular) and added auth using schematics:
 
 ```
 ionic start secure-ionic tabs
@@ -8,6 +8,8 @@ npm i -g @angular-devkit/schematics-cli@0.13.4
 npm i @oktadev/schematics
 schematics @oktadev/schematics:add-auth
 ```
+
+From the result of running schematics:add-auth, I manually extracted the dependencies and applied them to the original ionic-appauth-react-demo that I forked from, as described below. (BTW, running schematics:add-auth on a generated React Ionic project doesn't work).
 
 # Install NPM packages
 
