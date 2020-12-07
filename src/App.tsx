@@ -26,19 +26,22 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { AppContextProvider } from './services/State';
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route path="/landing" component={Landing} exact />
-        <PrivateRoute path="/home" component={Home} exact />
-        <Route path="/loginredirect" component={LoginRedirect} exact />
-        <Route path="/endredirect" component={EndRedirect} exact />
-        <Route exact path="/" render={() => <Redirect to="/landing" />} />
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+  <AppContextProvider>
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/landing" component={Landing} exact />
+          <PrivateRoute path="/home" component={Home} exact />
+          <Route path="/loginredirect" component={LoginRedirect} exact />
+          <Route path="/endredirect" component={EndRedirect} exact />
+          <Route exact path="/" render={() => <Redirect to="/landing" />} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  </AppContextProvider>
 );
 
 export default App;

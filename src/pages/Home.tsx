@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonPage, useIonViewWillEnter, useIonViewDidLeave } from '@ionic/react';
+import React, { useContext, useState } from 'react';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton, IonPage, useIonViewWillEnter, useIonViewDidLeave, IonItem, IonLabel, IonList } from '@ionic/react';
 
 import { ActionCard, UserInfoCard } from '../components';
 import { Auth } from '../services/AuthService';
 import { AuthActions, AuthActionBuilder, AuthObserver } from 'ionic-appauth';
 import { RouteComponentProps } from 'react-router';
+import { ApiService } from '../services/ApiService';
+import { ActionType, AppContext } from '../services/State';
 
 interface HomePageProps extends RouteComponentProps {}
 
@@ -12,6 +14,7 @@ const Home : React.FC<HomePageProps> = (props: HomePageProps) => {
 
     const [action, setAction] = useState(AuthActionBuilder.Default);
     const [user, setUser] = useState();
+    const { state, dispatch } = useContext(AppContext);
     let observer: AuthObserver;
 
     useIonViewWillEnter(() => {
@@ -44,6 +47,13 @@ const Home : React.FC<HomePageProps> = (props: HomePageProps) => {
     function handleGetUserDetails(e : any) {
         e.preventDefault();
         Auth.Instance.loadUserInfo();
+
+        new ApiService().getUsers().then(res => {
+            dispatch({
+              type: ActionType.SET_USERS,
+              users: res
+            })
+        })
     }
 
     return (
@@ -58,7 +68,16 @@ const Home : React.FC<HomePageProps> = (props: HomePageProps) => {
                 <IonButton onClick={handleRefresh}>Refresh Token</IonButton>
                 <IonButton onClick={handleSignOut}>Sign Out</IonButton>
                 <ActionCard action={action}></ActionCard>
-                {user && <UserInfoCard user={user}></UserInfoCard>}       
+                {user && <UserInfoCard user={user}></UserInfoCard>}
+                <IonList>
+                    {state.users.map((auser: any) => (
+                    <IonItem key={auser.id}>
+                        <IonLabel>
+                            {auser.name}
+                        </IonLabel>
+                    </IonItem>
+                    )) }
+                </IonList>
             </IonContent>
         </IonPage>
     ); 
